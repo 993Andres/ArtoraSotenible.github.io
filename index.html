@@ -47,6 +47,14 @@
             background: #2d6a4f;
             border-radius: 4px;
         }
+        /* Estilo para ocultar la barra del carrusel */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
+        }
     </style>
 </head>
 <body class="bg-artora-cream font-sans text-gray-800 antialiased flex flex-col min-h-screen">
@@ -71,11 +79,10 @@
     <!-- Main Header / Navbar -->
     <header class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-gray-100 shadow-sm">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-2 flex items-center justify-between">
-             </div>
 
             <!-- Brand Logo (Enlace de inicio) -->
             <a href="#" title="Inicio - Artora Sostenible" class="flex items-center group transition-transform hover:scale-105">
-                <img src="Artora Sostenible Logo.png" alt="Artora Sostenible" class="h-20 sm:h-24 w-auto object-contain max-h-24" onerror="this.onerror=null; this.src='https://placehold.co/200x80/2d6a4f/ffffff?text=ARTORA+Sostenible';">
+                <img src="./Artora Sostenible Logo.png" alt="Artora Sostenible" class="h-20 sm:h-24 w-auto object-contain max-h-24" onerror="this.onerror=null; this.src='https://placehold.co/220x90/2d6a4f/ffffff?text=ARTORA+Sostenible';">
             </a>
 
             <!-- Desktop Navigation -->
@@ -197,7 +204,7 @@
                     </div>
                     <h3 class="text-lg font-bold text-artora-dark">Productos Circulares</h3>
                     <p class="text-xs text-gray-600 mt-2 leading-relaxed">
-                        Nuestra arena sanitaria aglomerante minimiza la explotación de recursos debido a su larga vida util. Nuestors empaques son 100% reciclables y artiulables en campañas de devolución posconsumo. Arena Sanitaria con alto control de olores sin químicos perjudiciales.
+                        Nuestra arena sanitaria aglomerante minimiza la explotación de recursos debido a su larga vida útil. Nuestros empaques son 100% reciclables y articulables en campañas de devolución posconsumo.
                     </p>
                 </div>
 
@@ -246,11 +253,11 @@
                     </div>
 
                     <div class="flex gap-1 overflow-x-auto pb-1 sm:pb-0" id="category-filters">
-                        <button onclick="setCategory('all')" class="cat-btn active border px-3 py-2 text-xs font-semibold rounded-xl bg-artora-dark text-white border-artora-dark">Todos</button>
-                        <button onclick="setCategory('arena')" class="cat-btn border px-3 py-2 text-xs font-semibold rounded-xl bg-white text-gray-700 border-gray-200 hover:border-artora-primary">Arenas Eco</button>
-                        <button onclick="setCategory('snacks')" class="cat-btn border px-3 py-2 text-xs font-semibold rounded-xl bg-white text-gray-700 border-gray-200 hover:border-artora-primary">Snacks</button>
-                        <button onclick="setCategory('accesorios')" class="cat-btn border px-3 py-2 text-xs font-semibold rounded-xl bg-white text-gray-700 border-gray-200 hover:border-artora-primary">Accesorios</button>
-                        <button onclick="setCategory('pack')" class="cat-btn border px-3 py-2 text-xs font-semibold rounded-xl bg-white text-gray-700 border-gray-200 hover:border-artora-primary">Kits Solidarios</button>
+                        <button onclick="setCategory('all', this)" class="cat-btn active border px-3 py-2 text-xs font-semibold rounded-xl bg-artora-dark text-white border-artora-dark">Todos</button>
+                        <button onclick="setCategory('arena', this)" class="cat-btn border px-3 py-2 text-xs font-semibold rounded-xl bg-white text-gray-700 border-gray-200 hover:border-artora-primary">Arenas Eco</button>
+                        <button onclick="setCategory('snacks', this)" class="cat-btn border px-3 py-2 text-xs font-semibold rounded-xl bg-white text-gray-700 border-gray-200 hover:border-artora-primary">Snacks</button>
+                        <button onclick="setCategory('accesorios', this)" class="cat-btn border px-3 py-2 text-xs font-semibold rounded-xl bg-white text-gray-700 border-gray-200 hover:border-artora-primary">Accesorios</button>
+                        <button onclick="setCategory('pack', this)" class="cat-btn border px-3 py-2 text-xs font-semibold rounded-xl bg-white text-gray-700 border-gray-200 hover:border-artora-primary">Kits Solidarios</button>
                     </div>
                 </div>
             </div>
@@ -438,7 +445,8 @@
 
     <!-- Application Logic (JavaScript) -->
     <script>
-        // Catálogo de Productos con rutas a archivos del repositorio de GitHub
+        // Base de Datos de Productos de Artora Sostenible
+        // Nota: 'images' acepta un arreglo con rutas relativas a GitHub o URLs completas.
         const productsDatabase = [
             {
                 id: 'art-01',
@@ -450,7 +458,7 @@
                 moqB2B: 10,
                 badge: 'Más Vendido',
                 badgeColor: 'bg-artora-primary',
-                image: './Arena Sanitaria 4Kg.webp',
+                images: ['./Arena Sanitaria 4Kg.webp'],
                 icon: 'box'
             },
             {
@@ -463,7 +471,7 @@
                 moqB2B: 10,
                 badge: 'Más Vendido',
                 badgeColor: 'bg-artora-primary',
-                image: './Arena Sanitaria 9Kg.webp',
+                images: ['./Arena Sanitaria 9Kg.webp'],
                 icon: 'box'
             },
             {
@@ -471,12 +479,12 @@
                 name: 'Arena Circular de Café y Papa 5kg',
                 category: 'arena',
                 description: '100% Compostable, obtenida a través de procesos de economía circular.',
-                priceB2C: "Proximamente",
-                priceB2B: "Proximamente",
+                priceB2C: 'Consultar',
+                priceB2B: 'Consultar',
                 moqB2B: 10,
                 badge: 'Circular - Sostenible',
                 badgeColor: 'bg-artora-medium',
-                image: '',
+                images: [],
                 icon: 'sparkles'
             },
             {
@@ -489,7 +497,7 @@
                 moqB2B: 10,
                 badge: 'Saludable',
                 badgeColor: 'bg-artora-earth',
-                image: './Fellini UC.webp',
+                images: ['./Fellini UC.webp'],
                 icon: 'heart'
             },
             {
@@ -502,20 +510,20 @@
                 moqB2B: 5,
                 badge: 'Reciclable',
                 badgeColor: 'bg-artora-dark',
-                image: './Arenero Oval.webp',
+                images: ['./Arenero Oval.webp'],
                 icon: 'archive'
             },
             {
                 id: 'art-06',
                 name: 'Kit Solidario "Hogar de Paso"',
                 category: 'pack',
-                description: 'Incluye 2 Arenas Sanitarias Petra 4kg + Arenero Ovalado con pala. El 10% de tu compra se destina a hogares de paso, refugios o proteccionistas',
-                priceB2C: 120000,
-                priceB2B: "No Disponible",
-                moqB2B: N/D,
+                description: 'Incluye 2 Arenas Sanitarias Petra 4kg + Arenero Ovalado con pala. El 10% de tu compra se destina a hogares de paso, refugios o proteccionistas.',
+                priceB2C: 98000,
+                priceB2B: 'N/D',
+                moqB2B: 'N/D',
                 badge: 'Kit Solidario',
                 badgeColor: 'bg-artora-terracotta',
-                image: '',
+                images: [],
                 icon: 'gift'
             }
         ];
@@ -525,6 +533,7 @@
         let searchQuery = '';
 
         function formatCOP(amount) {
+            if (typeof amount === 'string') return amount;
             if (!amount || isNaN(amount)) return 'Consultar';
             return new Intl.NumberFormat('es-CO', {
                 style: 'currency',
@@ -557,14 +566,14 @@
             renderProducts();
         }
 
-        function setCategory(cat) {
+        function setCategory(cat, btnElement) {
             currentCategory = cat;
             const buttons = document.querySelectorAll('.cat-btn');
             buttons.forEach(btn => {
                 btn.className = 'cat-btn border px-3 py-2 text-xs font-semibold rounded-xl bg-white text-gray-700 border-gray-200 hover:border-artora-primary';
             });
-            if (event && event.target) {
-                event.target.className = 'cat-btn active border px-3 py-2 text-xs font-semibold rounded-xl bg-artora-dark text-white border-artora-dark';
+            if (btnElement) {
+                btnElement.className = 'cat-btn active border px-3 py-2 text-xs font-semibold rounded-xl bg-artora-dark text-white border-artora-dark';
             }
             renderProducts();
         }
@@ -581,15 +590,14 @@
             const phone = "573105666614";
             const price = currentMode === 'B2B' ? product.priceB2B : product.priceB2C;
             
-            let message = `Hola *Artora Sostenible*, estoy interesado en el siguiente producto de su catálogo:
-`;
+            let message = `Hola *Artora Sostenible*, estoy interesado en el siguiente producto de su catálogo:\n`;
             message += `\n📌 *Producto:* ${product.name}`;
             message += `\n🏷️ *Modalidad:* ${currentMode === 'B2B' ? 'Mayorista (B2B)' : 'Detal (B2C)'}`;
-            if (currentMode === 'B2B') {
+            if (currentMode === 'B2B' && product.moqB2B !== 'N/D') {
                 message += `\n📦 *Cantidad Mínima:* ${product.moqB2B} unidades`;
             }
             message += `\n💰 *Precio Referencial:* ${formatCOP(price)}`;
-            message += `\n\n¿Me podrías brindar más información sobre disponibilidad y envíos?`;
+            message += `\n\n¿Me podrías brindar más información sobre disponibilidad y envíos en Bogotá?`;
 
             const encodedMessage = encodeURIComponent(message);
             window.open(`https://wa.me/${phone}?text=${encodedMessage}`, '_blank');
@@ -616,17 +624,25 @@
             grid.innerHTML = filtered.map(p => {
                 const price = currentMode === 'B2B' ? p.priceB2B : p.priceB2C;
 
-                // Contenedor de la imagen con fallback en caso de error de ruta
-                const mediaContainer = p.image ? `
-                    <div class="w-full h-44 bg-white rounded-xl mb-4 overflow-hidden flex items-center justify-center p-2 group-hover:scale-105 transition-transform duration-300 border border-gray-100">
-                        <img src="${p.image}" alt="${p.name}" class="w-full h-full object-contain" onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
-                        <div class="hidden w-full h-full bg-artora-cream rounded-xl items-center justify-center">
-                            <i data-lucide="${p.icon}" class="w-12 h-12 text-artora-primary"></i>
+                // Carrusel / Contenedor de fotos táctil con Scroll-Snap
+                const mediaContainer = (p.images && p.images.length > 0) ? `
+                    <div class="relative w-full h-44 mb-4 group/carousel">
+                        <div class="w-full h-full flex overflow-x-auto snap-x snap-mandatory no-scrollbar rounded-xl border border-gray-100 bg-white">
+                            ${p.images.map(imgUrl => `
+                                <div class="snap-center shrink-0 w-full h-full flex items-center justify-center p-2">
+                                    <img src="${imgUrl}" alt="${p.name}" class="max-h-full max-w-full object-contain" onerror="this.onerror=null; this.src='https://placehold.co/300x300/2d6a4f/ffffff?text=Artora+Sostenible';">
+                                </div>
+                            `).join('')}
                         </div>
+                        ${p.images.length > 1 ? `
+                            <div class="absolute bottom-2 left-1/2 -translate-x-1/2 bg-black/60 text-white text-[10px] px-2 py-0.5 rounded-full backdrop-blur-sm pointer-events-none">
+                                📷 ${p.images.length} fotos (Desliza ➔)
+                            </div>
+                        ` : ''}
                     </div>
                 ` : `
                     <div class="w-full h-44 bg-artora-cream rounded-xl mb-4 flex items-center justify-center p-4 group-hover:scale-105 transition-transform duration-300">
-                        <i data-lucide="${p.icon}" class="w-12 h-12 text-artora-primary"></i>
+                        <i data-lucide="${p.icon || 'package'}" class="w-12 h-12 text-artora-primary"></i>
                     </div>
                 `;
 
@@ -637,7 +653,7 @@
                                 <span class="text-[10px] font-extrabold uppercase text-white px-2.5 py-1 rounded-md ${p.badgeColor}">
                                     ${p.badge}
                                 </span>
-                                ${currentMode === 'B2B' ? `
+                                ${currentMode === 'B2B' && p.moqB2B !== 'N/D' ? `
                                     <span class="text-[10px] bg-amber-100 text-amber-800 font-bold px-2 py-0.5 rounded border border-amber-300">
                                         Mínimo: ${p.moqB2B} unds
                                     </span>
@@ -683,8 +699,7 @@
             const role = document.getElementById('net-role').value;
             const msg = document.getElementById('net-msg').value;
 
-            let message = `🤝 *NUEVO REGISTRO EN LA RED SOLIDARIA ARTORA*
-`;
+            let message = `🤝 *NUEVO REGISTRO EN LA RED SOLIDARIA ARTORA*\n`;
             message += `\n*Nombre:* ${name}`;
             message += `\n*Teléfono:* ${phone}`;
             message += `\n*Rol:* ${role}`;
